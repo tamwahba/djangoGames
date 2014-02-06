@@ -7,9 +7,9 @@ urlpatterns = patterns('',
                        # /knights/loginuser/
                        url(r'^loginuser/', views.loginuser, name='loginuser'),
                        # /knights/<user_name>/returnspriteinfo/
-                       url(r'^(?P<user_name>[-A-Za-z0-9_]+)/$', views.returnspriteinfo, name='returnspriteinfo'),
+                       url(r'^(?P<user_name>[-A-Za-z0-9_]+)/returnspriteinfo/$', views.returnspriteinfo, name='returnspriteinfo'),
                        # /kinghts/highscores/
                        url(r'^highscores/', views.highscores, name='highscores'),
-                       # /knights/updateuser/
-                       url(r'^updateuser/', views.updateuser, name='updateuser'),
+                       # /knights/<user_name>/updateuser/
+                       url(r'^(?P<user_name>[-A-Za-z0-9_]+)/updateuser/', views.updateuser, name='updateuser'),
                        )

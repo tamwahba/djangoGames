@@ -28,14 +28,14 @@ def registeruser(request):
         resp = HttpResponse(content='')
     return resp
 
-def updateuser(request):
+def updateuser(request, user_name):
     if request.method == "POST":
         data = simplejson.loads(request.body.decode('utf-8'))
     else:
         data = request.REQUEST
     
     try:
-        userName = data['user_name']
+        userName = user_name
         coins = data['coins']
         # To DO : auth token
 
