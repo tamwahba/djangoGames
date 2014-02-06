@@ -9,7 +9,8 @@ from django.forms import CheckboxSelectMultiple
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    formfield_overrides = {models.ManyToManyField: {'widget': CheckboxSelectMultiple}}
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple}}
 
 
 admin.site.register(UserProfile, UserProfileAdmin)
