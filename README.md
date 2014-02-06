@@ -1,0 +1,4 @@
+djangoGames
+===========
+
+Knights game server
