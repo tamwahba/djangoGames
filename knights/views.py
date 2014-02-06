@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.utils import simplejson
-from knights.models import Sprite, UserProfile
+from knights.models import UserProfile
+
 
 def registeruser(request):
     if request.method == "POST":
@@ -19,7 +20,9 @@ def registeruser(request):
             User.objects.get(email=email)
             resp = HttpResponse(content='emailused')
         except User.DoesNotExist:
-            newuser = User.objects.create_user(userName, email=email, password=password)
+            newuser = User.objects.create_user(userName,
+                                               email=email,
+                                               password=password)
             newuser.save()
             UserProfile(user=newuser)
             resp = HttpResponse(content='registered')
@@ -28,12 +31,13 @@ def registeruser(request):
         resp = HttpResponse(content='')
     return resp
 
+
 def updateuser(request, user_name):
     if request.method == "POST":
         data = simplejson.loads(request.body.decode('utf-8'))
     else:
         data = request.REQUEST
-    
+
     try:
         userName = user_name
         coins = data['coins']
@@ -71,9 +75,6 @@ def loginuser(request):
                 resp = HttpResponse(content='login')
     except KeyError:
         resp = HttpResponse(content='')
-#    except Exception as err:
-#        resp = HttpResponse(str(err))
-#    print(resp.content)
     return resp
 
 
@@ -85,13 +86,13 @@ def returnspriteinfo(request, user_name):
 
         userP = UserProfile.objects.get(user=user)
     except UserNotFoundError:
-        resp = HttpResponse(content='usernotfound')
+        resp = HttpResponse(content='user not found')
 
     returnData = []
 
     for sprite in userP.sprites.all():
         spriteDict = {}
-        
+
         spriteDict["spriteID"] = sprite.spriteID
         spriteDict["xx"] = sprite.xx
         spriteDict["yy"] = sprite.yy
@@ -107,6 +108,6 @@ def highscores(request):
     returnData = []
 
     for userP in UserProfile.objects.all():
-         returnData.append({str(userP.user.username): str(userP.coins)})
+        returnData.append({str(userP.user.username): str(userP.coins)})
 
     return HttpResponse(simplejson.dumps(returnData))

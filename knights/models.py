@@ -2,11 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# Model.
-class Tokens(models.Model):
-    token = models.CharField(max_length=30)
-
-
 class Sprite(models.Model):
     spriteID = models.CharField(max_length=20)
     xx = models.IntegerField()
