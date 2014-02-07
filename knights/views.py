@@ -108,6 +108,6 @@ def highscores(request):
     returnData = []
 
     for userP in UserProfile.objects.all():
-        returnData.append({str(userP.user.username): str(userP.coins)})
+        returnData.append({'playersName': str(userP.user.username), 'coins' : str(userP.coins)})
 
     return HttpResponse(simplejson.dumps(returnData))
