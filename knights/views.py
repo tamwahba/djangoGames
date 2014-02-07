@@ -104,10 +104,26 @@ def returnspriteinfo(request, user_name):
 
 
 def highscores(request):
-
     returnData = []
 
     for userP in UserProfile.objects.all():
-        returnData.append({'playersName': str(userP.user.username), 'coins' : str(userP.coins)})
+        returnData.append({'playersName': str(userP),
+                           'coins': str(userP.coins)})
 
     return HttpResponse(simplejson.dumps(returnData))
+
+
+def friends(request, user_name):
+    username = user_name
+
+    try:
+        user = User.objects.get(username=username)
+
+        userP = UserProfile.objects.get(user=user)
+    except UserNotFoundError:
+        resp = HttpResponse(content='user not found')
+
+    returnData = []
+    for userP in UserProfile.friends.objects.all():
+        returnData.append({'playersName': str(userP)})
+
