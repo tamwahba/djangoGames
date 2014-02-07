@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     sprites = models.ManyToManyField(Sprite)
     coins = models.IntegerField(default=0)
-    friends = models.ManyToManyField(UserProfile)
+    friends = models.ManyToManyField('self')
 #    loggedToken = models.CharField(max_length=40)
 
     def __str__(self):

@@ -38,22 +38,34 @@ def updateuser(request, user_name):
     else:
         data = request.REQUEST
 
+    resp = HttpResponse(content='')
+
+    username = user_name
+
     try:
-        userName = user_name
+        user = User.objects.get(username=userName)
+        userP = UserProfile.objects.get(user=user)
+    except User.DoesNotExist:
+        return HttpResponse('user doesnt exist')
+
+    if 'coins' in data:
         coins = data['coins']
         # To DO : auth token
+        userP.coins = coins
+        userP.save()
+        resp += 'cons submitted')
 
+    if 'friend' in data:
+        friendName = data['friend']
         try:
-            user = User.objects.get(username=userName)
-            userP = UserProfile.objects.get(user=user)
-            userP.coins = coins
+            friend = User.objects.get(username=friendName)
+            friendP = UserProfile.objects.get(user=friend)
+            userP.friedns.add(friednP)
             userP.save()
-            resp = HttpResponse('success')
+            resp += 'friend added'
         except User.DoesNotExist:
-            resp = HttpResponse(content='user not found')
+            return HttpResponse(content='user not found')
 
-    except KeyError:
-        resp = HttpResponse(content='wrong post data')
     return resp
 
 
